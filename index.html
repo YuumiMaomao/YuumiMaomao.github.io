@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>很高兴认识你 — 陈有米 Yuumi</title>
+  <meta name="description" content="陈有米 Yuumi — 品牌内容营销 × AI 工作流，精通微信、抖音、小红书三平台内容营销。" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       CSS VARIABLES — Renaissance UI
+    ============================================================ */
+    :root {
+      --cream:      #F5F0E8;
+      --cream-dark: #EDE5D4;
+      --ink:        #1A1612;
+      --sepia:      #8B6F4E;
+      --gold:       #C9A84C;
+      --rust:       #A0522D;
+      --muted:      #9A8B7A;
+      --white:      #FDFBF7;
+
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-serif:   'Playfair Display', Georgia, serif;
+      --font-mono:    'Space Mono', monospace;
+
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-out-quart: cubic-bezier(0.32, 0.72, 0, 1);
+
+      --section-pad: clamp(80px, 10vw, 160px);
+      --content-max: 1200px;
+      --radius-card: 16px;
+      --radius-inner: 10px;
+    }
+
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--font-mono);
+      font-size: 15px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    img { display: block; max-width: 100%; }
+    a   { color: inherit; text-decoration: none; }
+
+    /* ============================================================
+       NOISE TEXTURE OVERLAY
+    ============================================================ */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-size: 180px 180px;
+    }
+
+    /* ============================================================
+       NAVIGATION — floating capsule
+    ============================================================ */
+    .nav {
+      position: fixed;
+      top: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 10px 20px;
+      background: rgba(245, 240, 232, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(201, 168, 76, 0.25);
+      border-radius: 100px;
+      transition: background 0.4s var(--ease-out-expo),
+                  box-shadow 0.4s var(--ease-out-expo);
+    }
+    .nav.scrolled {
+      background: rgba(245, 240, 232, 0.92);
+      box-shadow: 0 4px 32px rgba(26,22,18,0.10);
+    }
+    .nav a {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--sepia);
+      padding: 6px 14px;
+      border-radius: 100px;
+      transition: color 0.25s, background 0.25s;
+      white-space: nowrap;
+    }
+    .nav a:hover,
+    .nav a.active {
+      color: var(--ink);
+      background: rgba(201,168,76,0.15);
+    }
+    .nav a.active { color: var(--gold); }
+
+    /* ============================================================
+       SECTION SHARED
+    ============================================================ */
+    .section {
+      padding: var(--section-pad) clamp(24px, 6vw, 80px);
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+    .section-full {
+      padding: var(--section-pad) clamp(24px, 6vw, 80px);
+    }
+
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 7vw, 96px);
+      line-height: 0.95;
+      letter-spacing: 0.02em;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+    .section-subtitle {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: clamp(16px, 2vw, 22px);
+      color: var(--sepia);
+      margin-bottom: 56px;
+    }
+
+    /* Gold divider */
+    .gold-line {
+      width: 48px;
+      height: 2px;
+      background: var(--gold);
+      margin-bottom: 40px;
+    }
+
+    /* Platform label badge */
+    .platform-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid var(--gold);
+      border-radius: 100px;
+      padding: 4px 14px;
+      margin-bottom: 20px;
+    }
+
+    /* ============================================================
+       SCROLL ANIMATION — reveal
+    ============================================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      filter: blur(6px);
+      transition: opacity 0.8s var(--ease-out-expo),
+                  transform 0.8s var(--ease-out-expo),
+                  filter 0.8s var(--ease-out-expo);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.08s; }
+    .reveal-delay-2 { transition-delay: 0.16s; }
+    .reveal-delay-3 { transition-delay: 0.24s; }
+    .reveal-delay-4 { transition-delay: 0.32s; }
+
+    /* ============================================================
+       HERO — P1-2
+    ============================================================ */
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 640px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('assets/hero.webp');
+      background-size: cover;
+      background-position: center top;
+      transform: scale(1.06);
+      transition: transform 8s ease-out;
+    }
+    .hero-bg.loaded { transform: scale(1); }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(26,22,18,0.82) 0%,
+        rgba(26,22,18,0.4) 40%,
+        rgba(26,22,18,0.1) 100%
+      );
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 clamp(24px, 6vw, 80px) clamp(48px, 7vh, 80px);
+      max-width: var(--content-max);
+      margin: 0 auto;
+      width: 100%;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s var(--ease-out-expo) 0.2s,
+                  transform 1s var(--ease-out-expo) 0.2s;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(64px, 11vw, 160px);
+      line-height: 0.9;
+      letter-spacing: 0.02em;
+      color: var(--white);
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1s var(--ease-out-expo) 0.35s,
+                  transform 1s var(--ease-out-expo) 0.35s;
+    }
+    .hero-subtitle {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: clamp(16px, 2.2vw, 26px);
+      color: rgba(253,251,247,0.7);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s var(--ease-out-expo) 0.5s,
+                  transform 1s var(--ease-out-expo) 0.5s;
+    }
+    #hero.hero-ready .hero-eyebrow,
+    #hero.hero-ready .hero-title,
+    #hero.hero-ready .hero-subtitle {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .hero-scroll-hint {
+      position: absolute;
+      bottom: 32px;
+      right: clamp(24px, 6vw, 80px);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(253,251,247,0.4);
+    }
+    .hero-scroll-hint span {
+      display: block;
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, rgba(201,168,76,0.6), transparent);
+      animation: scrollLine 2s ease-in-out infinite;
+    }
+    @keyframes scrollLine {
+      0%   { transform: scaleY(0); transform-origin: top; }
+      50%  { transform: scaleY(1); transform-origin: top; }
+      51%  { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; }
+    }
+
+    /* ============================================================
+       CONTENT MARKETING — P3-4
+    ============================================================ */
+    #content-marketing {
+      background: var(--cream);
+    }
+
+    /* 4-col card grid */
+    .card-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .card-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    /* Double-Bezel card */
+    .card-bezel {
+      background: var(--cream-dark);
+      border-radius: var(--radius-card);
+      padding: 8px;
+      transition: transform 0.4s var(--ease-out-quart),
+                  box-shadow 0.4s var(--ease-out-quart);
+      cursor: pointer;
+    }
+    .card-bezel:hover {
+      transform: scale(0.97);
+      box-shadow: 0 0 0 1.5px var(--gold), 0 12px 40px rgba(26,22,18,0.12);
+    }
+    .card-bezel-inner {
+      border-radius: var(--radius-inner);
+      overflow: hidden;
+      aspect-ratio: 3/5;
+      background: var(--ink);
+    }
+    .card-bezel-inner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s var(--ease-out-expo);
+    }
+    .card-bezel:hover .card-bezel-inner img {
+      transform: scale(1.04);
+    }
+    .card-bezel-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 8px 4px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .card-bezel-label .arrow {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--cream);
+      font-size: 11px;
+      flex-shrink: 0;
+      transition: background 0.25s, transform 0.25s;
+    }
+    .card-bezel:hover .arrow {
+      background: var(--gold);
+      transform: rotate(45deg);
+    }
+
+    /* Douyin wide image */
+    .douyin-wrap {
+      margin-top: 24px;
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      aspect-ratio: 16/9;
+    }
+    .douyin-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Portfolio wall */
+    .portfolio-wall-wrap {
+      margin-top: 40px;
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      position: relative;
+    }
+    .portfolio-wall-wrap img { width: 100%; display: block; }
+    .portfolio-wall-wrap::before {
+      content: 'PORTFOLIO WALL';
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: rgba(253,251,247,0.6);
+      z-index: 1;
+    }
+
+    /* Platform separator */
+    .platform-sep {
+      border: none;
+      border-top: 1px solid rgba(139,111,78,0.2);
+      margin: 56px 0;
+    }
+
+    /* ============================================================
+       AI WORKFLOW — P5-6
+    ============================================================ */
+    #ai-workflow {
+      background: var(--cream-dark);
+    }
+
+    .workflow-flow {
+      display: flex;
+      align-items: flex-start;
+      gap: 0;
+      margin: 32px 0 40px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+    }
+    .workflow-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 140px;
+      flex: 1;
+      position: relative;
+    }
+    .workflow-step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 60px;
+      right: -1px;
+      width: calc(100% - 96px);
+      left: 50%;
+      height: 1px;
+      background: linear-gradient(to right, var(--gold), rgba(201,168,76,0.2));
+      transform: translateX(48px);
+      z-index: 0;
+    }
+    .workflow-step-img {
+      width: 96px;
+      aspect-ratio: 3/4;
+      border-radius: 10px;
+      overflow: hidden;
+      background: var(--cream);
+      position: relative;
+      z-index: 1;
+      border: 1.5px solid rgba(201,168,76,0.3);
+      transition: transform 0.4s var(--ease-out-quart),
+                  border-color 0.3s;
+    }
+    .workflow-step:hover .workflow-step-img {
+      transform: scale(1.06);
+      border-color: var(--gold);
+    }
+    .workflow-step-img img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    .workflow-step-num {
+      font-family: var(--font-display);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      margin-top: 10px;
+    }
+    .workflow-step-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 4px;
+      max-width: 110px;
+    }
+
+    /* Workflow result (成品) */
+    .workflow-result {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      margin-top: 40px;
+      padding: 28px 32px;
+      background: var(--cream);
+      border-radius: var(--radius-card);
+      border: 1px solid rgba(201,168,76,0.25);
+    }
+    .workflow-result-img {
+      width: 80px;
+      flex-shrink: 0;
+      border-radius: 10px;
+      overflow: hidden;
+      aspect-ratio: 3/5;
+    }
+    .workflow-result-img img { width: 100%; height: 100%; object-fit: cover; }
+    .workflow-result-text { flex: 1; }
+    .workflow-result-text h4 {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 18px;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+    .workflow-result-text p {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+    .btn-view {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink);
+      background: var(--cream-dark);
+      border: 1px solid rgba(201,168,76,0.4);
+      border-radius: 100px;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: background 0.3s, border-color 0.3s, transform 0.3s var(--ease-out-quart);
+      flex-shrink: 0;
+    }
+    .btn-view:hover {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--ink);
+      transform: scale(0.97);
+    }
+    .btn-view .btn-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--ink);
+      color: var(--cream);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      transition: background 0.3s;
+    }
+    .btn-view:hover .btn-icon {
+      background: var(--ink);
+    }
+
+    .workflow-sep {
+      border: none;
+      border-top: 1px solid rgba(139,111,78,0.2);
+      margin: 64px 0;
+    }
+
+    /* ============================================================
+       SKILLS — P7-8
+    ============================================================ */
+    #skills {
+      background: var(--cream);
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-bottom: 80px;
+    }
+    .skill-card {
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      position: relative;
+      aspect-ratio: 5/3;
+      cursor: default;
+      transition: transform 0.4s var(--ease-out-quart);
+    }
+    .skill-card:hover { transform: scale(0.98); }
+    .skill-card-bg {
+      position: absolute;
+      inset: 0;
+    }
+    .skill-card-bg img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s var(--ease-out-expo);
+    }
+    .skill-card:hover .skill-card-bg img { transform: scale(1.05); }
+    .skill-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(26,22,18,0.72) 0%,
+        rgba(26,22,18,0.35) 100%
+      );
+    }
+    .skill-card-content {
+      position: relative;
+      z-index: 1;
+      padding: 28px 32px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    .skill-card-icon {
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+    .skill-card-title {
+      font-family: var(--font-display);
+      font-size: 32px;
+      letter-spacing: 0.04em;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+    .skill-card-desc {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: rgba(253,251,247,0.6);
+    }
+
+    /* Other experiences */
+    .exp-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .exp-card {
+      background: var(--cream-dark);
+      border-radius: var(--radius-card);
+      padding: 8px;
+      transition: transform 0.35s var(--ease-out-quart),
+                  box-shadow 0.35s;
+    }
+    .exp-card:hover {
+      transform: scale(0.97);
+      box-shadow: 0 0 0 1.5px var(--gold);
+    }
+    .exp-card-inner {
+      border-radius: var(--radius-inner);
+      overflow: hidden;
+      background: var(--cream);
+    }
+    .exp-card-inner img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+    }
+    .exp-card-name {
+      padding: 10px 8px 6px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--sepia);
+    }
+
+    /* ============================================================
+       FUTURE — P9
+    ============================================================ */
+    #future {
+      background: var(--cream-dark);
+    }
+    .future-items {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .future-item {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 24px;
+      padding: 40px 0;
+      border-bottom: 1px solid rgba(139,111,78,0.18);
+      align-items: start;
+    }
+    .future-item:first-child { border-top: 1px solid rgba(139,111,78,0.18); }
+    .future-num {
+      font-family: var(--font-display);
+      font-size: 64px;
+      line-height: 1;
+      color: var(--gold);
+      opacity: 0.6;
+    }
+    .future-body {}
+    .future-title {
+      font-family: var(--font-serif);
+      font-size: clamp(18px, 2.2vw, 26px);
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+    .future-desc {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--sepia);
+      line-height: 1.7;
+    }
+
+    /* ============================================================
+       CONTACT — P10
+    ============================================================ */
+    #contact {
+      background: var(--ink);
+      padding: var(--section-pad) clamp(24px, 6vw, 80px);
+    }
+    .contact-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+    .contact-title {
+      font-family: var(--font-display);
+      font-size: clamp(56px, 9vw, 128px);
+      line-height: 0.9;
+      color: var(--white);
+      letter-spacing: 0.02em;
+      margin-bottom: 12px;
+    }
+    .contact-subtitle {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: clamp(16px, 2vw, 22px);
+      color: rgba(253,251,247,0.5);
+      margin-bottom: 64px;
+    }
+    .contact-qr-wrap {
+      display: flex;
+      gap: 40px;
+      align-items: flex-start;
+    }
+    .contact-qr {
+      flex: 1;
+      max-width: 260px;
+      background: rgba(253,251,247,0.06);
+      border-radius: var(--radius-card);
+      padding: 12px;
+      border: 1px solid rgba(201,168,76,0.2);
+      transition: transform 0.5s var(--ease-out-quart), border-color 0.3s;
+    }
+    .contact-qr:first-child { transform: rotate(-2deg); }
+    .contact-qr:last-child  { transform: rotate(2.5deg); margin-top: 24px; }
+    .contact-qr:hover {
+      transform: rotate(0deg) scale(1.02) !important;
+      border-color: var(--gold);
+    }
+    .contact-qr-inner {
+      border-radius: var(--radius-inner);
+      overflow: hidden;
+    }
+    .contact-qr-inner img { width: 100%; display: block; }
+
+    .contact-footer {
+      margin-top: 80px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(201,168,76,0.2);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .contact-footer p {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(253,251,247,0.25);
+    }
+
+    /* ============================================================
+       RESPONSIVE — mobile 768px
+    ============================================================ */
+    @media (max-width: 768px) {
+      .nav { gap: 0; padding: 8px 12px; }
+      .nav a { padding: 5px 8px; font-size: 9px; letter-spacing: 0.08em; }
+
+      .card-grid-4 { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .card-grid-3 { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+
+      .workflow-flow {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        overflow-x: visible;
+      }
+      .workflow-step { flex-direction: row; align-items: center; min-width: unset; }
+      .workflow-step::after { display: none; }
+      .workflow-step-img { width: 72px; flex-shrink: 0; }
+      .workflow-step-num, .workflow-step-label { text-align: left; margin-top: 0; margin-left: 12px; }
+      .workflow-step-label { max-width: unset; }
+
+      .workflow-result { flex-direction: column; align-items: flex-start; gap: 20px; }
+
+      .skills-grid { grid-template-columns: 1fr; }
+      .skill-card { aspect-ratio: 4/3; }
+
+      .exp-grid { grid-template-columns: 1fr; }
+
+      .future-item { grid-template-columns: 48px 1fr; gap: 16px; }
+      .future-num { font-size: 44px; }
+
+      .contact-qr-wrap { gap: 20px; }
+      .contact-qr { max-width: unset; }
+      .contact-qr:first-child { transform: rotate(-1deg); }
+      .contact-qr:last-child  { transform: rotate(1.5deg); }
+
+      .contact-footer { flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       NAVIGATION
+  ============================================================ -->
+  <nav class="nav" id="main-nav">
+    <a href="#content-marketing">内容营销</a>
+    <a href="#ai-workflow">AI 工作流</a>
+    <a href="#skills">技能 &amp; 经历</a>
+    <a href="#future">未来规划</a>
+    <a href="#contact">找我玩</a>
+  </nav>
+
+  <!-- ============================================================
+       HERO P1-2
+  ============================================================ -->
+  <section id="hero">
+    <div class="hero-bg" id="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">BRAND CONTENT &nbsp;·&nbsp; AI WORKFLOW &nbsp;·&nbsp; MARKETING</p>
+      <h1 class="hero-title">很高兴<br>认识你</h1>
+      <p class="hero-subtitle">陈有米 Yuumi &nbsp;—&nbsp; 品牌内容营销 × AI 工作流</p>
+    </div>
+    <div class="hero-scroll-hint">
+      <span></span>
+      scroll
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CONTENT MARKETING P3-4
+  ============================================================ -->
+  <section id="content-marketing">
+    <div class="section">
+
+      <p class="section-label reveal">品牌内容</p>
+      <h2 class="section-title reveal reveal-delay-1">精通3平台<br>品牌内容营销</h2>
+      <div class="gold-line reveal reveal-delay-2"></div>
+
+      <!-- 微信 -->
+      <div class="reveal">
+        <span class="platform-badge">01 &nbsp; WeChat</span>
+        <p style="font-family:var(--font-mono);font-size:12px;color:var(--muted);margin-bottom:8px;letter-spacing:0.1em;">点开看详情～</p>
+      </div>
+      <div class="card-grid-4">
+        <a href="https://mp.weixin.qq.com/s/nhW3Yp0ckwHWro4tE6qUNg" target="_blank" rel="noopener" class="card-bezel reveal reveal-delay-1">
+          <div class="card-bezel-inner"><img src="assets/wechat-1.webp" alt="微信文章1" loading="lazy" /></div>
+          <div class="card-bezel-label"><span>阅读</span><div class="arrow">↗</div></div>
+        </a>
+        <a href="https://mp.weixin.qq.com/s/xBoLoW_NHIt1F4dutp5fwQ" target="_blank" rel="noopener" class="card-bezel reveal reveal-delay-2">
+          <div class="card-bezel-inner"><img src="assets/wechat-2.webp" alt="微信文章2" loading="lazy" /></div>
+          <div class="card-bezel-label"><span>阅读</span><div class="arrow">↗</div></div>
+        </a>
+        <a href="https://mp.weixin.qq.com/s/199hBVE7zpXsEP8_nsLLYg" target="_blank" rel="noopener" class="card-bezel reveal reveal-delay-3">
+          <div class="card-bezel-inner"><img src="assets/wechat-3.webp" alt="微信文章3" loading="lazy" /></div>
+          <div class="card-bezel-label"><span>阅读</span><div class="arrow">↗</div></div>
+        </a>
+        <a href="https://mp.weixin.qq.com/s/ync3qg83CePAOwD4QCxDVA" target="_blank" rel="noopener" class="card-bezel reveal reveal-delay-4">
+          <div class="card-bezel-inner"><img src="assets/wechat-4.webp" alt="微信文章4" loading="lazy" /></div>
+          <div class="card-bezel-label"><span>阅读</span><div class="arrow">↗</div></div>
+        </a>
+      </div>
+
+      <hr class="platform-sep" />
+
+      <!-- 抖音 -->
+      <div class="reveal">
+        <span class="platform-badge">02 &nbsp; Douyin</span>
+      </div>
+      <div class="douyin-wrap reveal reveal-delay-1">
+        <img src="assets/douyin.webp" alt="抖音主页" loading="lazy" />
+      </div>
+
+      <hr class="platform-sep" />
+
+      <!-- 小红书 -->
+      <div class="reveal">
+        <span class="platform-badge">03 &nbsp; Xiaohongshu</span>
+        <p style="font-family:var(--font-mono);font-size:12px;color:var(--muted);margin-bottom:8px;letter-spacing:0.1em;">点开看详情～</p>
+      </div>
+      <div class="card-grid-4">
+        <a href="http://xhslink.com/o/5zeqq9PsaRY" target="_blank" rel="noopener" class="card-bezel reveal reveal-delay-1">
+          <div class="card-bezel-inner"><img src="assets/xiaohongshu-1.webp" alt="小红书作品1" loading="lazy" /></div>
+          <div class="card-bezel-label"><span>查看</span><div class="arrow">↗</div></div>
+        </a>
+        <a href="http://xhslink.com/o/6x0MK37o7pF" target="_blank" rel="noopener" class="card-bezel reveal reveal-delay-2">
+          <div class="card-bezel-inner"><img src="assets/xiaohongshu-2.webp" alt="小红书作品2" loading="lazy" /></div>
+          <div class="card-bezel-label"><span>查看</span><div class="arrow">↗</div></div>
+        </a>
+        <a href="http://xhslink.com/o/5hZnQCWHrJm" target="_blank" rel="noopener" class="card-bezel reveal reveal-delay-3">
+          <div class="card-bezel-inner"><img src="assets/xiaohongshu-3.webp" alt="小红书作品3" loading="lazy" /></div>
+          <div class="card-bezel-label"><span>查看</span><div class="arrow">↗</div></div>
+        </a>
+        <a href="http://xhslink.com/o/50HfShAN2d3" target="_blank" rel="noopener" class="card-bezel reveal reveal-delay-4">
+          <div class="card-bezel-inner"><img src="assets/xiaohongshu-4.webp" alt="小红书作品4" loading="lazy" /></div>
+          <div class="card-bezel-label"><span>查看</span><div class="arrow">↗</div></div>
+        </a>
+      </div>
+
+      <!-- 作品墙 -->
+      <div class="portfolio-wall-wrap reveal" style="margin-top:48px;">
+        <img src="assets/portfolio-wall.webp" alt="作品墙" loading="lazy" />
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       AI WORKFLOW P5-6
+  ============================================================ -->
+  <section id="ai-workflow" class="section-full">
+    <div class="section">
+
+      <p class="section-label reveal">AI 赋能</p>
+      <h2 class="section-title reveal reveal-delay-1">AI<br>工作流</h2>
+      <div class="gold-line reveal reveal-delay-2"></div>
+
+      <!-- 短链工作流 -->
+      <div class="reveal">
+        <span class="platform-badge">短链流程</span>
+        <p style="font-family:var(--font-mono);font-size:11px;color:var(--muted);letter-spacing:0.1em;margin-top:4px;">
+          参考图 &nbsp;→&nbsp; 语言模型提取风格提示词 &nbsp;→&nbsp; 文生图 &nbsp;→&nbsp; 产品校准 &nbsp;→&nbsp; 图生视频 &nbsp;→&nbsp; 剪映后期
+        </p>
+      </div>
+
+      <div class="workflow-flow reveal reveal-delay-1">
+        <div class="workflow-step">
+          <div class="workflow-step-img"><img src="assets/workflow-short-1.webp" alt="参考图" loading="lazy" /></div>
+          <div class="workflow-step-num">01</div>
+          <div class="workflow-step-label">参考图</div>
+        </div>
+        <div class="workflow-step">
+          <div class="workflow-step-img"><img src="assets/workflow-short-2.webp" alt="风格提示词" loading="lazy" /></div>
+          <div class="workflow-step-num">02</div>
+          <div class="workflow-step-label">提取风格提示词</div>
+        </div>
+        <div class="workflow-step">
+          <div class="workflow-step-img"><img src="assets/workflow-short-3.webp" alt="文生图" loading="lazy" /></div>
+          <div class="workflow-step-num">03</div>
+          <div class="workflow-step-label">文生图</div>
+        </div>
+        <div class="workflow-step">
+          <div class="workflow-step-img"><img src="assets/workflow-short-4.webp" alt="产品校准" loading="lazy" /></div>
+          <div class="workflow-step-num">04</div>
+          <div class="workflow-step-label">产品校准</div>
+        </div>
+        <div class="workflow-step">
+          <div class="workflow-step-img" style="display:flex;align-items:center;justify-content:center;background:var(--cream-dark);">
+            <span style="font-family:var(--font-display);font-size:28px;color:var(--gold);letter-spacing:0.05em;">▶</span>
+          </div>
+          <div class="workflow-step-num">05</div>
+          <div class="workflow-step-label">图生视频</div>
+        </div>
+      </div>
+
+      <div class="workflow-result reveal reveal-delay-2">
+        <div class="workflow-result-img">
+          <img src="assets/workflow-short-result.webp" alt="短链成品" loading="lazy" />
+        </div>
+        <div class="workflow-result-text">
+          <h4>短链成品</h4>
+          <p>AI 生成图文视频内容</p>
+        </div>
+        <a href="http://xhslink.com/o/41lxGTrPkEL" target="_blank" rel="noopener" class="btn-view">
+          点击查看成品 <div class="btn-icon">↗</div>
+        </a>
+      </div>
+
+      <p class="section-label reveal" style="margin-top:40px;margin-bottom:16px;">其他 AI 图文作品</p>
+      <div class="card-grid-3">
+        <a href="http://xhslink.com/o/1XsbzJzQfm3" target="_blank" rel="noopener" class="card-bezel reveal reveal-delay-1">
+          <div class="card-bezel-inner" style="aspect-ratio:2/3;"><img src="assets/ai-graphic-1.webp" alt="AI图文1" loading="lazy" /></div>
+          <div class="card-bezel-label"><span>查看</span><div class="arrow">↗</div></div>
+        </a>
+        <a href="http://xhslink.com/o/3zyhraDh6x4" target="_blank" rel="noopener" class="card-bezel reveal reveal-delay-2">
+          <div class="card-bezel-inner" style="aspect-ratio:2/3;"><img src="assets/ai-graphic-2.webp" alt="AI图文2" loading="lazy" /></div>
+          <div class="card-bezel-label"><span>查看</span><div class="arrow">↗</div></div>
+        </a>
+        <a href="http://xhslink.com/o/6BkUFc2Nhde" target="_blank" rel="noopener" class="card-bezel reveal reveal-delay-3">
+          <div class="card-bezel-inner" style="aspect-ratio:2/3;"><img src="assets/ai-graphic-3.webp" alt="AI图文3" loading="lazy" /></div>
+          <div class="card-bezel-label"><span>查看</span><div class="arrow">↗</div></div>
+        </a>
+      </div>
+
+      <hr class="workflow-sep" />
+
+      <!-- 长链工作流 -->
+      <div class="reveal">
+        <span class="platform-badge">长链流程</span>
+        <p style="font-family:var(--font-mono);font-size:11px;color:var(--muted);letter-spacing:0.1em;margin-top:4px;">
+          原始创意 &nbsp;→&nbsp; 分镜脚本 &nbsp;→&nbsp; AI线稿 &nbsp;→&nbsp; AI分镜图 &nbsp;→&nbsp; AI图生视频 &nbsp;→&nbsp; 剪映后期及配乐
+        </p>
+      </div>
+
+      <div class="workflow-flow reveal reveal-delay-1">
+        <div class="workflow-step">
+          <div class="workflow-step-img"><img src="assets/workflow-long-1.webp" alt="原始创意" loading="lazy" /></div>
+          <div class="workflow-step-num">01</div>
+          <div class="workflow-step-label">原始创意</div>
+        </div>
+        <div class="workflow-step">
+          <div class="workflow-step-img"><img src="assets/workflow-long-2.webp" alt="分镜脚本" loading="lazy" /></div>
+          <div class="workflow-step-num">02</div>
+          <div class="workflow-step-label">分镜脚本</div>
+        </div>
+        <div class="workflow-step">
+          <div class="workflow-step-img"><img src="assets/workflow-long-3.webp" alt="AI线稿" loading="lazy" /></div>
+          <div class="workflow-step-num">03</div>
+          <div class="workflow-step-label">AI 线稿</div>
+        </div>
+        <div class="workflow-step">
+          <div class="workflow-step-img"><img src="assets/workflow-long-4.webp" alt="AI分镜图" loading="lazy" /></div>
+          <div class="workflow-step-num">04</div>
+          <div class="workflow-step-label">AI 分镜图</div>
+        </div>
+        <div class="workflow-step">
+          <div class="workflow-step-img" style="display:flex;align-items:center;justify-content:center;background:var(--cream);">
+            <span style="font-family:var(--font-display);font-size:28px;color:var(--gold);letter-spacing:0.05em;">▶</span>
+          </div>
+          <div class="workflow-step-num">05</div>
+          <div class="workflow-step-label">图生视频 + 配乐</div>
+        </div>
+      </div>
+
+      <div class="workflow-result reveal reveal-delay-2">
+        <div class="workflow-result-img">
+          <img src="assets/workflow-long-result.webp" alt="长链成品" loading="lazy" />
+        </div>
+        <div class="workflow-result-text">
+          <h4>长链成品</h4>
+          <p>完整 AI 动画短片</p>
+        </div>
+        <a href="http://xhslink.com/o/3AClNDDK6sH" target="_blank" rel="noopener" class="btn-view">
+          点击查看成品 <div class="btn-icon">↗</div>
+        </a>
+      </div>
+
+      <p class="section-label reveal" style="margin-top:40px;margin-bottom:16px;">其他 AI 视频作品</p>
+      <div class="card-grid-3">
+        <a href="http://xhslink.com/o/4deR6NjghyO" target="_blank" rel="noopener" class="card-bezel reveal reveal-delay-1">
+          <div class="card-bezel-inner" style="aspect-ratio:2/3;"><img src="assets/ai-video-1.webp" alt="AI视频1" loading="lazy" /></div>
+          <div class="card-bezel-label"><span>查看</span><div class="arrow">↗</div></div>
+        </a>
+        <a href="http://xhslink.com/o/6AwFgmVvFfV" target="_blank" rel="noopener" class="card-bezel reveal reveal-delay-2">
+          <div class="card-bezel-inner" style="aspect-ratio:2/3;"><img src="assets/ai-video-2.webp" alt="AI视频2" loading="lazy" /></div>
+          <div class="card-bezel-label"><span>查看</span><div class="arrow">↗</div></div>
+        </a>
+        <a href="http://xhslink.com/o/26ANeUwwp4z" target="_blank" rel="noopener" class="card-bezel reveal reveal-delay-3">
+          <div class="card-bezel-inner" style="aspect-ratio:2/3;"><img src="assets/ai-video-3.webp" alt="AI视频3" loading="lazy" /></div>
+          <div class="card-bezel-label"><span>查看</span><div class="arrow">↗</div></div>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SKILLS P7-8
+  ============================================================ -->
+  <section id="skills">
+    <div class="section">
+
+      <p class="section-label reveal">技能 &amp; 经历</p>
+      <h2 class="section-title reveal reveal-delay-1">更多<br>品牌技能</h2>
+      <div class="gold-line reveal reveal-delay-2"></div>
+
+      <div class="skills-grid">
+        <div class="skill-card reveal reveal-delay-1">
+          <div class="skill-card-bg"><img src="assets/skill-brand.webp" alt="品牌策划" loading="lazy" /></div>
+          <div class="skill-card-overlay"></div>
+          <div class="skill-card-content">
+            <div class="skill-card-icon">🎯</div>
+            <div class="skill-card-title">品牌策划</div>
+            <div class="skill-card-desc">市场调研 · 策略优化 · 方案落地</div>
+          </div>
+        </div>
+        <div class="skill-card reveal reveal-delay-2">
+          <div class="skill-card-bg"><img src="assets/skill-media.webp" alt="媒介运营" loading="lazy" /></div>
+          <div class="skill-card-overlay"></div>
+          <div class="skill-card-content">
+            <div class="skill-card-icon">📱</div>
+            <div class="skill-card-title">媒介运营</div>
+            <div class="skill-card-desc">抖音直播 · 小红书投放 · 数据分析</div>
+          </div>
+        </div>
+        <div class="skill-card reveal reveal-delay-3">
+          <div class="skill-card-bg"><img src="assets/skill-collab.webp" alt="跨界合作" loading="lazy" /></div>
+          <div class="skill-card-overlay"></div>
+          <div class="skill-card-content">
+            <div class="skill-card-icon">🚀</div>
+            <div class="skill-card-title">跨界合作</div>
+            <div class="skill-card-desc">品牌联名 · 快闪活动 · 周边开发</div>
+          </div>
+        </div>
+        <div class="skill-card reveal reveal-delay-4">
+          <div class="skill-card-bg"><img src="assets/skill-project.webp" alt="项目管理" loading="lazy" /></div>
+          <div class="skill-card-overlay"></div>
+          <div class="skill-card-content">
+            <div class="skill-card-icon">🛠️</div>
+            <div class="skill-card-title">项目管理</div>
+            <div class="skill-card-desc">SOP梳理 · 流程优化 · 知识库</div>
+          </div>
+        </div>
+      </div>
+
+      <p class="section-label reveal" style="margin-top:80px;margin-bottom:20px;">其他经历</p>
+      <div class="exp-grid">
+        <div class="exp-card reveal reveal-delay-1">
+          <div class="exp-card-inner">
+            <img src="assets/exp-naitangpai.webp" alt="奶糖派" loading="lazy" />
+          </div>
+          <div class="exp-card-name">奶糖派</div>
+        </div>
+        <div class="exp-card reveal reveal-delay-2">
+          <div class="exp-card-inner">
+            <img src="assets/exp-galaxy.webp" alt="银河集团" loading="lazy" />
+          </div>
+          <div class="exp-card-name">银河集团</div>
+        </div>
+        <div class="exp-card reveal reveal-delay-3">
+          <div class="exp-card-inner">
+            <img src="assets/exp-actionpai.webp" alt="行动派" loading="lazy" />
+          </div>
+          <div class="exp-card-name">行动派</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FUTURE P9
+  ============================================================ -->
+  <section id="future" class="section-full">
+    <div class="section">
+
+      <p class="section-label reveal">展望</p>
+      <h2 class="section-title reveal reveal-delay-1">未来能<br>做的事</h2>
+      <p class="section-subtitle reveal reveal-delay-2">AI赋能，从内容生产到营销玩法</p>
+
+      <div class="future-items">
+        <div class="future-item reveal">
+          <div class="future-num">01</div>
+          <div class="future-body">
+            <h3 class="future-title">搭建内容AI数据中心，高品质一站式发布流</h3>
+            <p class="future-desc">依据品牌规范，制定标准化生文、生图、生脚本、生视频要求，批量审阅及发布</p>
+          </div>
+        </div>
+        <div class="future-item reveal reveal-delay-1">
+          <div class="future-num">02</div>
+          <div class="future-body">
+            <h3 class="future-title">多模态调用Skill和MCP连接内外部数据API，辅助经营提效</h3>
+            <p class="future-desc">CRM、DP等自动分析内部最新经营数值，同行竞品数据快速深度调研，发现市场机会点</p>
+          </div>
+        </div>
+        <div class="future-item reveal reveal-delay-2">
+          <div class="future-num">03</div>
+          <div class="future-body">
+            <h3 class="future-title">汇报及营销场景vibe/spec coding，推动项目决策和落地</h3>
+            <p class="future-desc">辅助演示快速推进项目 / 先demo快速测试反馈，再开启正式项目</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CONTACT P10
+  ============================================================ -->
+  <section id="contact">
+    <div class="contact-inner">
+
+      <h2 class="contact-title reveal">欢迎来<br>找我玩</h2>
+      <p class="contact-subtitle reveal reveal-delay-1">我叫陈有米Yuumi，和我的喵喵同名</p>
+
+      <div class="contact-qr-wrap reveal reveal-delay-2">
+        <div class="contact-qr">
+          <div class="contact-qr-inner">
+            <img src="assets/contact-1.webp" alt="联系方式" loading="lazy" />
+          </div>
+        </div>
+        <div class="contact-qr">
+          <div class="contact-qr-inner">
+            <img src="assets/contact-2.webp" alt="社交平台" loading="lazy" />
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-footer reveal">
+        <p>陈有米 Yuumi &nbsp;·&nbsp; 品牌内容营销 × AI 工作流</p>
+        <p>© 2025 &nbsp;·&nbsp; Made with ♥</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       JAVASCRIPT
+  ============================================================ -->
+  <script>
+    // Hero background load + entrance
+    const heroBg = document.getElementById('hero-bg');
+    const img = new Image();
+    img.onload = () => {
+      heroBg.style.backgroundImage = "url('assets/hero.webp')";
+      heroBg.classList.add('loaded');
+    };
+    img.src = 'assets/hero.webp';
+    setTimeout(() => document.getElementById('hero').classList.add('hero-ready'), 200);
+
+    // Nav scroll state
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // Active nav link tracking
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav a');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(a => a.classList.remove('active'));
+          const link = document.querySelector(`.nav a[href="#${entry.target.id}"]`);
+          if (link) link.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+    sections.forEach(s => observer.observe(s));
+
+    // Scroll reveal
+    const revealEls = document.querySelectorAll('.reveal');
+    const revealObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObs.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -60px 0px', threshold: 0.05 });
+    revealEls.forEach(el => revealObs.observe(el));
+  </script>
+
+</body>
+</html>
